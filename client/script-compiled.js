@@ -1,22 +1,29 @@
-var _this = this;
-
 $(document).ready(() => {
     (function () {
         fetchFiles();
     })();
 
-    $('.file').click(() => {
-        fetchFiles($(_this).text());
+    // get sub files
+    $(document).on('click', '.file', () => {
+        let dir = $(event.target).text() || '.';
+        fetchFiles(dir);
     });
 });
 
-function fetchFiles(path = null) {
-    $.get('/explore', { path }, files => {
-        console.log(files);
+/**
+ * fetch files of the current directory
+ * @param cwd
+ */
+function fetchFiles(cwd = '.') {
+    $.get('/explore', { cwd }, files => {
         renderFiles(files);
     });
 }
 
+/**
+ * render fetched files to views
+ * @param files
+ */
 function renderFiles(files) {
     let $container = $('#files');
     $container.empty();

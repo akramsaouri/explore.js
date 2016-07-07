@@ -3,19 +3,28 @@ $(document).ready(() => {
         fetchFiles();
     })();
 
-    $('.file').click(() => {
-        fetchFiles($(this).text());
+    // get sub files
+    $(document).on('click', '.file', () => {
+        let dir = $(event.target).text() || '.';
+        fetchFiles(dir);
     })
 });
 
 
-function fetchFiles(path = null) {
-    $.get('/explore', {path}, (files) => {
-        console.log(files);
+/**
+ * fetch files of the current directory
+ * @param cwd
+ */
+function fetchFiles(cwd = '.') {
+    $.get('/explore', {cwd}, (files) => {
         renderFiles(files);
     })
 }
 
+/**
+ * render fetched files to views
+ * @param files
+ */
 function renderFiles(files) {
     let $container = $('#files');
     $container.empty();
