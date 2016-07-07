@@ -6,7 +6,7 @@ module.exports = {
     /**
      * Scan the current directory, fetch his sub dirs and resolve the path to each one of them
      */
-    scan: function (req, res) {
+    scan(req, res) {
         // navigate forward || back in the tree
         var cwd = req.query.dirname ? path.join(req.query.dirname, '..') : req.query.cwd;
         // get all files and resole their absolute path

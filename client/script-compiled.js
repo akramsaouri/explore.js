@@ -13,6 +13,11 @@ $(document).ready(() => {
         let dirname = $('#dirname').text(); // go back in the dir tree
         $.get('/explore/scan', { dirname }, renderFiles);
     });
+
+    $('#search').keyup(() => {
+        var key = $('#search').val();
+        search(key);
+    });
 });
 
 /**
@@ -37,6 +42,17 @@ function renderFiles(data = {}) {
         $container.append(str);
     });
     $('#dirname').text(dirname);
+}
+
+/**
+ * Search file by key
+ * @param key
+ */
+function search(key = '') {
+    let files = $('#files li');
+    files.each((index, elm) => {
+        $(elm).text().indexOf(key) !== -1 ? $(elm).show() : $(elm).hide();
+    });
 }
 
 //# sourceMappingURL=script-compiled.js.map
