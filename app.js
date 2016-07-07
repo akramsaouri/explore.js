@@ -13,6 +13,8 @@ app.use('/', express.static(path.join(__dirname, 'client'))); // static files
 
 app.get('/explore/scan', explore.scan);
 
+app.get('/explore/unlink',explore.unlink);
+
 app.listen(3000);
 
 //

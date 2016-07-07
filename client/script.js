@@ -1,6 +1,9 @@
 $(document).ready(() => {
     (function () {
         fetchFiles('.'); // fetch file of current dir // todo : avoid magic strs
+        $.get('/explore/unlink', {file: 'E:/Explore.js/test/ok.txt'}, (data)=> {
+            console.log(data)
+        });
     })();
 
     // get sub files
@@ -9,11 +12,13 @@ $(document).ready(() => {
         fetchFiles(cwd);
     });
 
+    // go back in the dir tree
     $('#back').click(() => {
-        let dirname = $('#dirname').text(); // go back in the dir tree
+        let dirname = $('#dirname').text();
         $.get('/explore/scan', {dirname}, renderFiles);
     });
 
+    // on search
     $('#search').keyup(() => {
         var key = $('#search').val();
         search(key);
