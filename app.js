@@ -11,13 +11,10 @@ app.use(bodyParser.urlencoded({
 
 app.use('/', express.static(path.join(__dirname, 'client'))); // static files
 
-app.get('/explore', explore.scan);
+app.get('/explore/scan', explore.scan);
 
 app.listen(3000);
 
 //
 //var fs = require('fs');
-//fs.readdir('.', function (err, files) {
-//    var file = files[5];
-//    console.log(path.resolve('./', file));
-//});
+//console.log(fs.readdirSync('..').map((file) => path.resolve('..', file)));
