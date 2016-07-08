@@ -1,10 +1,11 @@
 #!/usr/bin/env node
-var path = require('path');
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
 
-var explore = require('./explorer');
+const path = require('path'),
+    express = require('express'),
+    app = express(),
+    bodyParser = require('body-parser');
+
+const explore = require('./explorer');
 
 app.use(bodyParser.json()); // body parser
 app.use(bodyParser.urlencoded({
@@ -15,10 +16,6 @@ app.use('/', express.static(path.join(__dirname, 'client'))); // static files
 
 app.get('/explore/scan', explore.scan);
 
-app.get('/explore/unlink',explore.unlink);
+app.get('/explore/unlink', explore.unlink);
 
 app.listen(3000);
-
-//
-//var fs = require('fs');
-//console.log(fs.readdirSync('..').map((file) => path.resolve('..', file)));

@@ -17,7 +17,7 @@ $(document).ready(() => {
 
     // on search
     $('#search').keyup(() => {
-        var key = $('#search').val();
+        const key = $('#search').val();
         search(key);
     });
 
