@@ -5,6 +5,17 @@ const path = require('path'),
     app = express(),
     bodyParser = require('body-parser');
 
+const commander = require('commander'),
+    package_json = require(path.join(__dirname, 'package.json'));
+
+// command line utility
+commander
+    .version(package_json.version)
+    .option('--port <port>', 'Port to listen to (3000 default one)', parseInt)
+    .parse(process.argv);
+
+const port = commander.port || 3000;
+
 const explore = require('./explorer');
 
 app.use(bodyParser.json()); // body parser
@@ -18,4 +29,4 @@ app.get('/explore/scan', explore.scan);
 
 app.get('/explore/unlink', explore.unlink);
 
-app.listen(3000);
+app.listen(port); //listen on the chosen port ( 3000 default one )
