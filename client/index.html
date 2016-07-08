@@ -4,13 +4,26 @@
     <meta charset="UTF-8">
     <title>Explore.js</title>
     <link rel="icon" href="js.ico"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
 <body>
-<div>
-    <h5 id="dirname"></h5>
-    <input type="text" id="search" placeholder="search in path">
-    <a href="#" id="back">back</a>
-    <ul id="files"></ul>
+<div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#" id="dirname"></a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="search" placeholder="Search">
+                    </div>
+                    <button style="margin-left: 100px" type="button" id="back" class="btn btn-default">Back</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <ul class="list-group" id="files"></ul>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.js"></script>
 <script src="script.js"></script>

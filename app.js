@@ -1,8 +1,9 @@
 var path = require('path');
 var express = require('express');
 var app = express();
-var explore = require('./explore');
 var bodyParser = require('body-parser');
+
+var explore = require('./explore');
 
 app.use(bodyParser.json()); // body parser
 app.use(bodyParser.urlencoded({

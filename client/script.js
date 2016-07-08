@@ -1,14 +1,11 @@
 $(document).ready(() => {
     (function () {
         fetchFiles('.'); // fetch file of current dir // todo : avoid magic strs
-        $.get('/explore/unlink', {file: 'E:/Explore.js/test/ok.txt'}, (data)=> {
-            console.log(data)
-        });
     })();
 
     // get sub files
     $(document).on('click', '.file', () => {
-        let cwd = $(event.target).text(); // get file basename
+        let cwd = $(event.target).parent().attr('id'); // get file basename
         fetchFiles(cwd);
     });
 
@@ -23,6 +20,12 @@ $(document).ready(() => {
         var key = $('#search').val();
         search(key);
     });
+
+    // on delete click
+    $(document).on('click', '.delete', () => {
+        const file = $(event.target).parent().attr('id');
+        $.get('/explore/unlink', {file}); // todo : ajax laod
+    })
 });
 
 
@@ -36,18 +39,22 @@ function fetchFiles(cwd = '') {
 
 /**
  * render fetched files to the view
- * @param data : files + resolved dirname
+ * @param files
  */
-function renderFiles(data = {}) {
-    let files = data.files || [],
-        dirname = data.dirname || '',
-        $container = $('#files');
+function renderFiles(files = []) {
+    const $container = $('#files');
     $container.empty();
     files.forEach((file) => {
-        let str = `<li><a href="#" class="file">${file}</a></li>`;
+        let str = `
+        <li class="list-group-item" id="${file.dir}\\${file.base}">
+        <a href="#" class="file">
+        ${file.base}
+        </a>
+        <a href="#" class="delete btn btn-danger btn-xs pull-right">delete</a>
+        </li>`;
         $container.append(str);
     });
-    $('#dirname').text(dirname);
+    $('#dirname').text(files[0].dir);
 }
 
 /**
@@ -55,7 +62,7 @@ function renderFiles(data = {}) {
  * @param key
  */
 function search(key = '') {
-    let files = $('#files li');
+    let files = $('#files').find('li');
     files.each((index, elm) => {
         ($(elm).text().indexOf(key) !== -1) ? $(elm).show() : $(elm).hide();
     })

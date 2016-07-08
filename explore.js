@@ -4,24 +4,22 @@ var fs = require('fs'),
 module.exports = {
 
     /**
-     * Scan the current directory, fetch his sub dirs and resolve the path to each one of them
+     * Scan the current directory, fetch his sub dirs and send them to the front
      */
     scan(req, res) {
         // navigate forward or back in the tree
         var cwd = (req.query.dirname) ? path.join(req.query.dirname, '..') : req.query.cwd;
-        // get all files and resolve their absolute path
-        var files = fs.readdirSync(cwd).map((file) => path.resolve(cwd, file));
-        // get the dirname
-        dirname = path.dirname(files[0]);
-        // finally send the data to the front end
-        res.send({files, dirname});
+        // get all files, resolve their absolute path and then parse them
+        var files = fs.readdirSync(cwd)
+            .map((file) => path.resolve(cwd, file))
+            .map((file) => path.parse(file));
+        // finally send the files to the front end
+        res.send(files);
     },
     /**
      * Delete a file
-     * @param req
-     * @param res
      */
-    unlink(req, res){
+    unlink(req, res){ // todo : needs a res
         var file = req.query.file || '';
         // only delete if it's a file
         if (path.extname(file).length > 0) {
