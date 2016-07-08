@@ -1,9 +1,10 @@
+#!/usr/bin/env node
 var path = require('path');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 
-var explore = require('./explore');
+var explore = require('./explorer');
 
 app.use(bodyParser.json()); // body parser
 app.use(bodyParser.urlencoded({
