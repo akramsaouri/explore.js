@@ -20,8 +20,10 @@ $(document).ready(() => {
 
     // on delete click
     $(document).on('click', '.delete', () => {
-        const file = $(event.target).parent().attr('id');
-        $.get('/explore/unlink', {file}); // todo : ajax laod
+        if (confirm("Are you sure ?")) {
+            const file = $(event.target).parent().attr('id');
+            $.get('/explore/unlink', {file}, () => fetchFiles());
+        }
     });
 
     $.fn.editable.defaults.mode = 'inline'; // prefer inline mode in the x-editable
@@ -57,7 +59,7 @@ function renderFiles(files = []) {
         data-type="text" data-pk="${file.dir}\\${file.base}" data-url="/explore/rename"
          data-value="${file.name}">rename
         </a>
-        <a href="#" class="delete btn btn-danger btn-xs pull-right">delete</a><!-- todo : validate delete -->
+        <a href="#" class="delete btn btn-danger btn-xs pull-right">delete</a>
         </li>`;
         // attach it to the dom
         $container.append(str);

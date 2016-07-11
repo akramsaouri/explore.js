@@ -39,7 +39,7 @@ module.exports = {
     /**
      * Rename a file
      */
-    rename(req, res){ // todo : needs res
+    rename(req, res){
         let _old = req.body.pk,
             _new = req.body.value;
         // get the root dirname
