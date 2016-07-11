@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs'),
+    fsextra = require('fs-extra'),
     path = require('path');
 
 module.exports = {
@@ -27,14 +28,13 @@ module.exports = {
      */
     unlink(req, res){
         const file = req.query.file || '';
-        // only delete if it's a file
-        if (path.extname(file).length > 0) {
-            fs.unlink(file, (err)=> {
-                // send status code res
-                const status = (err) ? 500 : 200;
-                res.status(status).end();
-            });
-        }
+        // fs-extra unlike fs module can remove
+        // both files and dirs even if dirs have contents
+        fsextra.remove(file, (err)=> {
+            // send the status
+            const status = (err) ? 500 : 200;
+            res.status(status).end();
+        });
     },
     /**
      * Rename a file
@@ -47,7 +47,7 @@ module.exports = {
         // join the _new name file with it's path
         _new = path.join(dirname, _new);
         // rename it
-        fs.rename(_old, _new, ()=> {
+        fs.rename(_old, _new, (err)=> {
             // send status code res
             const status = (err) ? 500 : 200;
             res.status(status).end();
