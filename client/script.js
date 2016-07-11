@@ -15,8 +15,11 @@ $(document).ready(() => {
         $.get('/explore/scan', {dirname}, renderFiles);
     });
 
-    // on search
+    // on search in current path
     $('#search').keyup(search);
+
+    // on search in all tree
+    $('#search-all').keyup(searchall);
 
     // on delete click
     $(document).on('click', '.delete', () => {
@@ -78,4 +81,16 @@ function search() {
         ($(elm).text().indexOf(search) !== -1) ? $(elm).show() : $(elm).hide();
     });
     // if (search.length === 0) console.log('ok')//files.all.show();
+}
+
+
+/**
+ Search in the whole tree
+ */
+
+function searchall() {
+    const search = $('#search-all').val();
+    $.get('/explore/search', {search}, (files) => {
+        console.log(files);
+    })
 }

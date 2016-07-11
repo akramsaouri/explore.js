@@ -30,7 +30,7 @@ module.exports = {
         const file = req.query.file || '';
         // fs-extra unlike fs module can remove
         // both files and dirs even if dirs have contents
-        fsextra.remove(file, (err)=> {
+        fsextra.remove(file, (err) => {
             // send the status
             const status = (err) ? 500 : 200;
             res.status(status).end();
@@ -52,5 +52,19 @@ module.exports = {
             const status = (err) ? 500 : 200;
             res.status(status).end();
         });
+    },
+    /** Search in path */
+    search(req, res){
+        const cwd = req.query.cwd || '.';
+        let files = []; // will hold all the fetched files while walking through the tree
+        fsextra.walk(cwd)
+            .on('data', (file) => {
+                // push file to files array
+                files.push(file.path)
+            })
+            .on('end', () => {
+                // send files to the client
+                res.send(files);
+            })
     }
 };

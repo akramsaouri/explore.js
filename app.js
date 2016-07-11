@@ -32,6 +32,8 @@ app.get('/explore/scan', explore.scan);
 
 app.get('/explore/unlink', explore.unlink);
 
+app.get('/explore/search', explore.search);
+
 app.post('/explore/rename', explore.rename);
 
 app.listen(port, () => console.log(`starting app on ${port} port with ${browser} browser`)); //listen on the chosen port ( 3000 default one )
