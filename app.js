@@ -34,7 +34,7 @@ app.get('/explore/unlink', explore.unlink);
 
 app.post('/explore/rename', explore.rename);
 
-app.listen(port, ()=> console.log(`starting app on ${port} port with ${browser} browser`)); //listen on the chosen port ( 3000 default one )
+app.listen(port, () => console.log(`starting app on ${port} port with ${browser} browser`)); //listen on the chosen port ( 3000 default one )
 
 // serve file in the browser
-open(`http://localhost:${port}`, browser);
+//open(`http://localhost:${port}`, browser);

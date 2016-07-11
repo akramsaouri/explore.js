@@ -70,12 +70,12 @@ function renderFiles(files = []) {
 
 /**
  * Search file by key
- * @param key
  */
-function search(key = '') {
+function search() {
     const search = $('#search').val(),
         files = $('#files').find('li');
     files.each((index, elm) => {
-        ($(elm).text().indexOf(key) !== -1) ? $(elm).show() : $(elm).hide();
-    })
+        ($(elm).text().indexOf(search) !== -1) ? $(elm).show() : $(elm).hide();
+    });
+    // if (search.length === 0) console.log('ok')//files.all.show();
 }
