@@ -15,11 +15,9 @@ $(document).ready(() => {
         $.get('/explore/scan', {dirname}, renderFiles);
     });
 
-    // on search in current path
+    // on search
     $('#search').keyup(search);
 
-    // on search in all tree
-    $('#search-all').keyup(searchall);
 
     // on delete click
     $(document).on('click', '.delete', () => {
@@ -73,24 +71,22 @@ function renderFiles(files = []) {
 
 /**
  * Search file by key
+ * at first the engine search in the current path files
+ * if no file found, the engine search in the whole tree
  */
 function search() {
     const search = $('#search').val(),
-        files = $('#files').find('li');
+        files = $('#files').find('li'),
+        label = $('#label');
+    let i = 0;
+
+    label.text('Searching in path');
     files.each((index, elm) => {
-        ($(elm).text().indexOf(search) !== -1) ? $(elm).show() : $(elm).hide();
+        ($(elm).text().indexOf(search) !== -1) ? ( $(elm).show(), i++) : $(elm).hide()
     });
-    // if (search.length === 0) console.log('ok')//files.all.show();
-}
-
-
-/**
- Search in the whole tree
- */
-
-function searchall() {
-    const search = $('#search-all').val();
-    $.get('/explore/search', {search}, (files) => {
-        console.log(files);
-    })
+    if (i === 0) { // if no file found
+        label.text('Searching in tree');
+        $.get('/explore/search', {search}, (files) => console.log(files))
+    }
+    if (search === '') label.text('');
 }
